@@ -19,6 +19,7 @@ import { cn } from "@/lib/utils";
 import { api } from "@/convex/_generated/api";
 // import { useConvexQuery } from "@/hooks/use-convex-query";
 import Image from "next/image";
+import { useConvexQuery } from "@/hooks/use-convex-querry";
 
 const sidebarItems = [
   {
@@ -48,7 +49,7 @@ export default function DashboardLayout({ children }) {
   const pathname = usePathname();
 
   // Get draft info for badge
-//   const { data: draftPost } = useConvexQuery(api.posts.getUserDraft);
+const { data: draftPost } = useConvexQuery(api.posts.getUserDraft);
 
   const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
 
@@ -123,7 +124,7 @@ export default function DashboardLayout({ children }) {
                   />
                   <span className="font-medium">{item.title}</span>
 
-                  {/* Badge for Create Post if draft exists
+                  {/* Badge for Create Post if draft exists */}
                   {item.title === "Create Post" && draftPost && (
                     <Badge
                       variant="secondary"
@@ -131,7 +132,7 @@ export default function DashboardLayout({ children }) {
                     >
                       Draft
                     </Badge>
-                  )} */}
+                  )}
                 </div>
               </Link>
             );
