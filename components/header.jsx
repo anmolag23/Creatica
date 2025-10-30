@@ -15,7 +15,7 @@ const Header = () => {
     const {isLoading, isAuthenticated} = useStoreUser();
     const path = usePathname();
 
-    if(path.includes("/dashboard")){
+    if(path !== "/" && path !== "/feed" && path.split("/").length >= 2){
       return null;
     }
 
