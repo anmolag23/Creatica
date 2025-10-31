@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, use } from "react";
 import PublicHeader from "../_components/public-header";
 import { useUser } from "@clerk/nextjs";
 import { useConvexMutation, useConvexQuery } from "@/hooks/use-convex-querry";
@@ -25,32 +25,15 @@ import { Textarea } from "@/components/ui/textarea";
 import { BarLoader } from "react-spinners";
 
 const PostPage = ({ params }) => {
-  const { username, postId } = React.use(params);
+  const { username, postId } = React.use(params); 
   const { user: currentUser } = useUser();
-
-  const { data: currentConvexUser } = useConvexQuery(
-    api.users.getCurrentuser,
-    currentUser ? {} : "skip"
-  );
-
+  const { data: currentConvexUser } = useConvexQuery( api.users.getCurrentuser, currentUser ? {} : "skip" );
   const [commentContent, setCommentContent] = useState("");
-
-  const {
-    data: post,
-    isLoading: postLoading,
-    error: postError,
-  } = useConvexQuery(api.public.getPublishedPost, { username, postId });
-
-  const { data: comments, isLoading: commentsLoading } = useConvexQuery(
-    api.comments.getPostComments,
-    { postId }
-  );
-
-  // Get like status for current user
-  const { data: hasLiked } = useConvexQuery(
-    api.likes.hasUserLiked,
-    currentUser ? { postId } : "skip"
-  );
+  const { data: post, isLoading: postLoading, error: postError, } = useConvexQuery(api.public.getPublishedPost, { username, postId }); 
+  const { data: comments, isLoading: commentsLoading } = useConvexQuery( api.comments.getPostComments, { postId } ); 
+  
+  // Get like status for current user 
+  const { data: hasLiked } = useConvexQuery( api.likes.hasUserLiked, currentUser ? { postId } : "skip" );
 
   const toggleLike = useConvexMutation(api.likes.toggleLike);
 

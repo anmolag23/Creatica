@@ -7,7 +7,7 @@ import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { BarLoader } from 'react-spinners';
 import { toast } from 'sonner';
-import { generateBlogContent } from '@/app/actions/gemini';
+import { generateBlogContent, improveContent } from '@/app/actions/gemini';
 
 const ReactQuill = dynamic(() => import("react-quill-new"), { ssr: false });
 

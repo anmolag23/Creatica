@@ -17,7 +17,7 @@ import { Badge } from "@/components/ui/badge";
 import { UserButton } from "@clerk/nextjs";
 import { cn } from "@/lib/utils";
 import { api } from "@/convex/_generated/api";
-// import { useConvexQuery } from "@/hooks/use-convex-query";
+// import { useConvexQuery } from "@/hooks/use-convex-querry";
 import Image from "next/image";
 import { useConvexQuery } from "@/hooks/use-convex-querry";
 

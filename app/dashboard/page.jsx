@@ -26,22 +26,52 @@ import { api } from "@/convex/_generated/api";
 import { useConvexQuery } from "@/hooks/use-convex-querry";
 import { formatDistanceToNow } from "date-fns";
 import DailyViewsChart from "@/components/daily-views-chart";
+import { useUser } from "@clerk/nextjs";
 
 export default function DashboardPage() {
+
+  const { user, isSignedIn } = useUser(); // Clerk
+  
+
+  // if (!isSignedIn) {
+  //   return (
+  //     <div className="min-h-screen flex items-center justify-center text-slate-400">
+  //       Please sign in to view your dashboard.
+  //     </div>
+  //   );
+  // }
   // Fetch real data
-  const { data: analytics, isLoading: analyticsLoading } = useConvexQuery(
-    api.dashboard.getAnalytics
+  // const { data: analytics, isLoading: analyticsLoading } = useConvexQuery(
+  //   api.dashboard.getAnalytics
+  // );
+  // const { data: recentPosts, isLoading: postsLoading } = useConvexQuery(
+  //   api.dashboard.getPostsWithAnalytics,
+  //   { limit: 5 }
+  // );
+  // const { data: recentActivity, isLoading: activityLoading } = useConvexQuery(
+  //   api.dashboard.getRecentActivity,
+  //   { limit: 8 }
+  // );
+  // const { data: dailyViewsData, isLoading: chartLoading } = useConvexQuery(
+  //   api.dashboard.getDailyViews
+  // );
+
+
+  const { data: analytics } = useConvexQuery(
+    api.dashboard.getAnalytics,
+    isSignedIn ? {} : undefined
   );
-  const { data: recentPosts, isLoading: postsLoading } = useConvexQuery(
+  const { data: recentPosts } = useConvexQuery(
     api.dashboard.getPostsWithAnalytics,
-    { limit: 5 }
+    isSignedIn ? { limit: 5 } : undefined
   );
-  const { data: recentActivity, isLoading: activityLoading } = useConvexQuery(
+  const { data: recentActivity } = useConvexQuery(
     api.dashboard.getRecentActivity,
-    { limit: 8 }
+    isSignedIn ? { limit: 8 } : undefined
   );
-  const { data: dailyViewsData, isLoading: chartLoading } = useConvexQuery(
-    api.dashboard.getDailyViews
+  const { data: dailyViewsData } = useConvexQuery(
+    api.dashboard.getDailyViews,
+    isSignedIn ? {} : undefined
   );
 
   // Format time relative to now
@@ -72,6 +102,14 @@ export default function DashboardPage() {
     commentsGrowth: 0,
     followersGrowth: 0,
   };
+
+  if (!isSignedIn) {
+    return (
+      <div className="min-h-screen flex items-center justify-center text-slate-400">
+        Please sign in to view your dashboard.
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-8 p-4 lg:p-8">
